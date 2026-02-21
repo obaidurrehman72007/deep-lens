@@ -6,12 +6,11 @@
       "destination": "/Backend/server.js"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/Frontend/$1"
+      "handle": "filesystem"
     },
     {
       "source": "/(.*)",
-      "destination": "/Frontend/index.html"
+      "destination": "/Frontend/dist/index.html"
     }
   ]
 }
