@@ -5,10 +5,10 @@
       "source": "/api/(.*)",
       "destination": "/Backend/server.js"
     },
-    
+    "handle",
     {
       "source": "/(.*)",
-      "destination": "/Frontend/index.html"
+      "destination": "/index.html"
     }
   ]
 }
