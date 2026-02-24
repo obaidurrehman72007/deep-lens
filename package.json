@@ -1,0 +1,7 @@
+{
+  "name": "my-fullstack-app",
+  "scripts": {
+    "start": "node api/server.js",
+    "build": "cd frontend && npm install && npm run build"
+  }
+}
