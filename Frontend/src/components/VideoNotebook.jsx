@@ -99,9 +99,7 @@ const VideoNotebook = ({ videoId, videoUrl, onTimestampClick, currentTime }) => 
             </div>
 
             <div className="flex items-start gap-3">
-              <button onClick={() => onTimestampClick(note.rawTime)} className="bg-slate-800 text-white text-[10px] px-2 py-1 rounded">
-                {note.time}
-              </button>
+              
               <div className="flex-1">
                 {editingId === note._id ? (
                   <div className="flex flex-col gap-2">
