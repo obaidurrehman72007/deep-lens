@@ -137,7 +137,7 @@ const VideoCanvas = () => {
             </h1>
           </div>
         </div>
-        <div className="flex items-center gap-3 px-4 py-2 bg-slate-900/40 backdrop-blur-md border border-slate-700/50 rounded-xl shadow-xl">
+        <div className="hidden lg:flex  items-center gap-3 px-4 py-2 bg-slate-900/40 backdrop-blur-md border border-slate-700/50 rounded-xl shadow-xl">
           <div className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>

@@ -255,7 +255,7 @@ const Dashboard = () => {
                 <p className="font-bold text-slate-900">Analyze New Video</p>
               </div>
             </div>
-            <form onSubmit={handleAddVideo} className="flex gap-3">
+            <form onSubmit={handleAddVideo} className="flex flex-col lg:flex-row gap-3">
               <input
                 type="url"
                 placeholder="Paste YouTube source URL..."
@@ -264,7 +264,7 @@ const Dashboard = () => {
                 onChange={(e) => setUrl(e.target.value)}
                 className="flex-1 rounded-2xl border border-slate-200 bg-slate-50/50 px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder:text-slate-400"
               />
-              <button disabled={submitting} className="bg-slate-900 px-8 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-indigo-600 transition-all active:scale-95 disabled:opacity-50 shadow-lg shadow-slate-200">
+              <button disabled={submitting} className="bg-slate-900 px-8 py-4 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-indigo-600 transition-all active:scale-95 disabled:opacity-50 shadow-lg shadow-slate-200">
                 {submitting ? <Loader2 className="animate-spin" size={18} /> : "Inject"}
               </button>
             </form>
@@ -280,7 +280,7 @@ const Dashboard = () => {
                 <p className="font-bold text-slate-900">Enter Shared Space</p>
               </div>
             </div>
-            <form onSubmit={handleVisitShareLink} className="flex gap-3">
+            <form onSubmit={handleVisitShareLink} className="flex flex-col lg:flex-row gap-3">
               <input
                 type="text"
                 placeholder="Paste transmission link..."
@@ -289,7 +289,7 @@ const Dashboard = () => {
                 onChange={(e) => setShareLink(e.target.value)}
                 className="flex-1 rounded-2xl border border-slate-200 bg-slate-50/50 px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500 transition-all placeholder:text-slate-400"
               />
-              <button type="submit" className="bg-emerald-600 px-8 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-200">
+              <button type="submit" className="bg-emerald-600 px-8 py-4 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-200">
                 Sync
               </button>
             </form>
