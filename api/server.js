@@ -14,7 +14,20 @@ if (MongoStore.default) {
 }
 connectDB();
 require('./src/config/passport')(passport);
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      "default-src": ["'self'"],
+     
+      "img-src": ["'self'", "data:", "https://www.gstatic.com", "https://*.googleusercontent.com"],
+      
+      "frame-src": ["'self'", "https://www.youtube.com", "https://www.youtube-nocookie.com"],
+    
+      "script-src": ["'self'", "'unsafe-inline'"], 
+      "connect-src": ["'self'", "https://deep-lens-production.up.railway.app"]
+    },
+  },
+}));
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true,
