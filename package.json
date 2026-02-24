@@ -1,7 +1,14 @@
 {
-  "name": "my-fullstack-app",
+  "name": "full-stack-app",
+  "version": "1.0.0",
   "scripts": {
     "start": "node api/server.js",
-    "build": "cd Frontend && npm install && npm run build"
+    "build": "cd frontend && npm install && npm run build"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "mongoose": "^8.0.0",
+    "dotenv": "^16.0.0",
+    "cors": "^2.8.5"
   }
 }
