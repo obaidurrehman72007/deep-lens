@@ -7,7 +7,7 @@ let MongoStore = require('connect-mongo'); // Standard for v4+
 const cors = require('cors');
 const helmet = require('helmet');
 const connectDB = require('./src/config/db');
-
+const path = require('path');
 const app = express();
 if (MongoStore.default) {
   MongoStore = MongoStore.default;
@@ -46,6 +46,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/api', require('./src/routes/api'));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// 2. The "Catch-all" handler:
+// Any request that isn't an API route should serve index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
