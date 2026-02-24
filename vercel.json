@@ -3,14 +3,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/Backend/server.js"
-    },
-    {
-      "handle": "filesystem"
+      "destination": "Backend/server.js"
     },
     {
       "source": "/(.*)",
-      "destination": "/Frontend/index.html"
+      "destination": "Frontend/index.html"
     }
   ]
 }
