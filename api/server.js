@@ -39,9 +39,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/api', require('./src/routes/api'));
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.use(express.static(path.join(__dirname, '../Frontend/dist')));
 app.get(/^(?!\/api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  res.sendFile(path.join(__dirname, '../Frontend/dist/index.html'));
 });
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
