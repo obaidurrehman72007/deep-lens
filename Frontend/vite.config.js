@@ -11,7 +11,7 @@ export default defineConfig({
     proxy: {
       // Directs all /api requests to your Express server
       '/api': {
-        target: 'http://localhost:5000',
+        target: process.env.FRONTEND_URL,
         changeOrigin: true,
         secure: false,
       },
