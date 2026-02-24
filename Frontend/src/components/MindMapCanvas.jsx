@@ -184,7 +184,7 @@ const MindMapCanvas = ({ videoId, currentTime, token }) => {
       )}
 
       {/* Toolbar */}
-      <div className="p-3 bg-white border-b flex flex-wrap gap-2 items-center justify-between shadow-sm z-10">
+      <div className="p-3 bg-white border-b flex flex-col lg:flex-row flex-wrap   gap-2 items-center justify-between shadow-sm z-10">
         <div className="flex gap-1 bg-slate-100 p-1 rounded-xl border">
           <ToolBtn active={tool==="select"} onClick={()=>setTool("select")} icon={<MousePointer2 size={18}/>} />
           <ToolBtn active={tool==="hand"} onClick={()=>setTool("hand")} icon={<Move size={18}/>} />
@@ -198,7 +198,7 @@ const MindMapCanvas = ({ videoId, currentTime, token }) => {
           <ToolBtn active={tool==="text"} onClick={()=>setTool("text")} icon={<Type size={18}/>} />
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl border">
             {colors.map(c => (
               <button key={c} onClick={() => setColor(c)} className={`w-6 h-6 rounded-full transition-transform ${color === c ? 'scale-110 ring-2 ring-indigo-400' : ''}`} style={{ backgroundColor: c }} />
@@ -207,7 +207,7 @@ const MindMapCanvas = ({ videoId, currentTime, token }) => {
           <input type="range" min="1" max="50" value={brushSize} onChange={(e) => setBrushSize(parseInt(e.target.value))} className="w-20" />
           <button onClick={() => setIsFilled(!isFilled)} className={`p-2 rounded-xl border ${isFilled ? 'bg-indigo-600 text-white' : ''}`}><PaintBucket size={18}/></button>
           <button onClick={() => setCamera({x:0, y:0, zoom:1})}><Maximize size={18}/></button>
-          <button onClick={() => setElements([])} className="text-red-500"><Trash2 size={18}/></button>
+          <button onClick={() => setElements([])} className="text-red-500"><Trash2 size={18}/></button> 
           <button onClick={async () => { await api.post(`/canvas/${videoId}/save`, { elements, camera, currentTime }); showAlert("Synced", "success"); }} className="bg-indigo-600 text-white px-4 py-2 rounded-xl font-bold">SYNC</button>
         </div>
       </div>
