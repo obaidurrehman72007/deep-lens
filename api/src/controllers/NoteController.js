@@ -36,7 +36,7 @@ exports.addNote = async (req, res) => {
       req.params.videoId, 
       req.user, 
       'CREATE_NOTE', 
-      `Added note: "${text.substring(0, 20)}..." at ${time}`
+      `Added note: "${text.substring(0, 20)}"`
     );
     res.status(201).json(savedNote);
   } catch (err) {

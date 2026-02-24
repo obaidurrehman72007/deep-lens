@@ -93,6 +93,7 @@ const VideoCanvas = () => {
       try {
         const res = await api.get(`/video/${video._id}/logs`);
         setLogs(res.data);
+      
       } catch (err) {
         console.error("Log Fetch Error", err);
       }

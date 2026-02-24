@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Clock, Plus, List, Edit2, Check, X, User, Calendar, History, Trash2 } from "lucide-react";
+import { Plus, User, History, Edit2, Check, X, Trash2 } from "lucide-react";
 import api from '../services/api'; 
 import { useAuth } from '../context/AuthContext'; 
 
-const VideoNotebook = ({ videoId, videoUrl, onTimestampClick, currentTime }) => {
-  const { user, loading: authLoading } = useAuth(); 
+const VideoNotebook = ({ videoId }) => {
+  const { user } = useAuth(); 
   const [notes, setNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [editBuffer, setEditBuffer] = useState("");
-  const [manualTime, setManualTime] = useState(""); 
-  const [videoTitle, setVideoTitle] = useState("Study Session");
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -19,7 +17,7 @@ const VideoNotebook = ({ videoId, videoUrl, onTimestampClick, currentTime }) => 
       try {
         const res = await api.get(`/video/${videoId}/notes`);
         setNotes(res.data);
-      } catch (err) { console.error(err); }
+      } catch (err) { console.error("Error fetching notes:", err); }
     };
     fetchNotes();
   }, [videoId]);
@@ -27,18 +25,17 @@ const VideoNotebook = ({ videoId, videoUrl, onTimestampClick, currentTime }) => 
   const addNote = async (e) => {
     e.preventDefault();
     if (!currentNote.trim() || !user) return;
-    const timeToSave = manualTime !== "" ? Number(manualTime) : (currentTime || 0);
 
     try {
       const res = await api.post(`/video/${videoId}/notes`, {
         text: currentNote,
-        time: formatTime(timeToSave),
-        rawTime: timeToSave
       });
-      setNotes([...notes, res.data].sort((a,b) => a.rawTime - b.rawTime));
+      setNotes([...notes, res.data]);
       setCurrentNote("");
-      setManualTime("");
-    } catch (err) { alert("Error saving note"); }
+    } catch (err) { 
+      console.error(err);
+      alert("Error saving note"); 
+    }
   };
 
   const saveEdit = async (id) => {
@@ -50,17 +47,11 @@ const VideoNotebook = ({ videoId, videoUrl, onTimestampClick, currentTime }) => 
   };
 
   const deleteNote = async (id) => {
-    if (!window.confirm("Delete?")) return;
+    if (!window.confirm("Delete this note?")) return;
     try {
       await api.delete(`/notes/${id}`);
       setNotes(notes.filter(n => n._id !== id));
     } catch (err) { alert("Delete failed"); }
-  };
-
-  const formatTime = (s) => {
-    const mins = Math.floor(s / 60);
-    const secs = Math.floor(s % 60).toString().padStart(2, '0');
-    return `${mins}:${secs}`;
   };
 
   return (
@@ -75,12 +66,10 @@ const VideoNotebook = ({ videoId, videoUrl, onTimestampClick, currentTime }) => 
           <div key={note._id} className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
             <div className="flex justify-between items-start mb-2">
               <div className="flex flex-col">
-                <div className="flex items-center gap-1.5">
-                   <span className="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-bold">
-                     <User size={10} className="inline mr-1" />
-                     {note.creatorEmail || "Anonymous"} 
-                   </span>
-                </div>
+                <span className="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-bold">
+                  <User size={10} className="inline mr-1" />
+                  {note.creatorEmail || "Anonymous"} 
+                </span>
                 {note.lastEditedBy && (
                   <span className="text-[9px] text-amber-600 italic mt-1">
                     <History size={10} className="inline mr-1" />
@@ -89,7 +78,6 @@ const VideoNotebook = ({ videoId, videoUrl, onTimestampClick, currentTime }) => 
                 )}
               </div>
               
-              {/* Only show edit/delete if it's the user's note */}
               {user?.email === note.creatorEmail && (
                 <div className="flex gap-1">
                   <button onClick={() => { setEditingId(note._id); setEditBuffer(note.text); }} className="p-1 text-slate-400 hover:text-indigo-600"><Edit2 size={12}/></button>
@@ -98,21 +86,18 @@ const VideoNotebook = ({ videoId, videoUrl, onTimestampClick, currentTime }) => 
               )}
             </div>
 
-            <div className="flex items-start gap-3">
-              
-              <div className="flex-1">
-                {editingId === note._id ? (
-                  <div className="flex flex-col gap-2">
-                    <textarea className="w-full text-sm p-2 border rounded" value={editBuffer} onChange={e => setEditBuffer(e.target.value)} />
-                    <div className="flex justify-end gap-2">
-                      <button onClick={() => setEditingId(null)}><X size={16}/></button>
-                      <button onClick={() => saveEdit(note._id)} className="text-green-600"><Check size={16}/></button>
-                    </div>
+            <div className="flex-1">
+              {editingId === note._id ? (
+                <div className="flex flex-col gap-2">
+                  <textarea className="w-full text-sm p-2 border rounded" value={editBuffer} onChange={e => setEditBuffer(e.target.value)} />
+                  <div className="flex justify-end gap-2">
+                    <button onClick={() => setEditingId(null)}><X size={16}/></button>
+                    <button onClick={() => saveEdit(note._id)} className="text-green-600"><Check size={16}/></button>
                   </div>
-                ) : (
-                  <p className="text-sm text-slate-700">{note.text}</p>
-                )}
-              </div>
+                </div>
+              ) : (
+                <p className="text-sm text-slate-700">{note.text}</p>
+              )}
             </div>
           </div>
         ))}
